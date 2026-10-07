@@ -1,5 +1,7 @@
 package hu.bme.mit.spaceship;
 
+import java.util.Random;
+
 /**
 * Class storing and managing the torpedoes of a ship
 *
@@ -26,27 +28,28 @@ public class TorpedoStore {
     }
   }
 
+
+  private final Random generator = new Random();
+
   public boolean fire(int numberOfTorpedos){
-   if(numberOfTorpedos < 1 || numberOfTorpedos > this.torpedoCount){
-  throw new IllegalArgumentException("numberOfTorpedos");
-}
+    if(numberOfTorpedos < 1 || numberOfTorpedos > this.torpedoCount){
+        throw new IllegalArgumentException("numberOfTorpedos");
+    }
+
     boolean success = false;
 
     // simulate random overheating of the launcher bay which prevents firing
-  
-    double r = Math.random();
+    double r = generator.nextDouble();
 
     if (r >= FAILURE_RATE) {
-      // successful firing
-      this.torpedoCount -= numberOfTorpedos;
-      success = true;
+        this.torpedoCount -= numberOfTorpedos;
+        success = true;
     } else {
-      // simulated failure
-      success = false;
+        success = false;
     }
 
     return success;
-  }
+}
 
   public boolean isEmpty(){
     return this.torpedoCount <= 0;
